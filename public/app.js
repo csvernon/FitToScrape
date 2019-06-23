@@ -1,12 +1,20 @@
 // Grab the articles as a json
-$.getJSON("/articles", function(data) {
-  // For each one
+$.getJSON("/articles", function (data) {
   for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+      $("#articles").append(
+          "<ul class='list-group'>" +
+          "<a href='" + data[i].link + "'>" +
+          "<li class='list-group-item active'>" + data[i].title + "<button class='btn btn-secondary float-right' id='save-article'>Save Article</button></li>" +
+          "</a>" +
+          "<li class='list-group-item'>" + data[i].summary + "</li>" +
+          "</ul>" +
+          "<br>"
+      )
   }
 });
 
+$(document).on("click", "#save-article", function () {
+});
 
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function() {
@@ -69,4 +77,15 @@ $(document).on("click", "#savenote", function() {
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");
   $("#bodyinput").val("");
+});
+
+$(document).on("click", "#clear", function () {
+  $("#articles").empty();
+  $("#articles").append(
+      "<h1 style='color:white'>Looks like you haven't scraped any articles yet!</h1>"
+  )
+});
+
+$(document).on("click", "#scrape", function () {
+
 });
