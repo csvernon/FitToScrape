@@ -16,10 +16,9 @@ var PORT = 3000;
 // Initialize Express
 var app = express();
 
-// Configure middleware
-
 // Use morgan logger for logging requests
 app.use(logger("dev"));
+app.use(express.static(__dirname + "/public"))
 // Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -27,8 +26,9 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
-
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+mongoose.connect(MONGODB_URI);
+mongoose.set('useFindAndModify', false);
 // Routes
 
 // A GET route for scraping the echoJS website
